@@ -1,0 +1,16 @@
+[Unit]
+Description=Terraform Private Registry
+Wants=network.target network-online.target
+After=network.target network-online.target
+
+[Service]
+WorkingDirectory=/srv/tfregistry
+ExecStart=/usr/bin/python3 /srv/tfregistry/main.py
+StandardOutput=null
+Restart=on-failure
+# Increase the default a bit in order to allow many simultaneous
+# files to be monitored, we might need a lot of fds.
+LimitNOFILE=16384
+
+[Install]
+WantedBy=multi-user.target
